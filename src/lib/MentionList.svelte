@@ -12,11 +12,6 @@ let items = $state<Array<string>>([]);
 type Command = (options: { id: string }) => void;
 let command: Command | undefined = $state(undefined);
 
-function setItems(newItems: Array<string>): void {
-    items = newItems;
-    selectedIndex = 0;
-}
-
 function selectItem(item: any) {
     command?.({ id: item })
 }
@@ -74,6 +69,7 @@ export function onUpdate(props: SuggestionProps<string, { id: string }>): void {
     // update states
     command = props.command;
     items = props.items;
+    selectedIndex = 0;
 
     // update position
     updatePosition(props.editor);
