@@ -23,7 +23,7 @@ onMount(() => {
                 suggestion: suggestion(mentionList),
             }),
         ],
-        content: '<p>Hello World! 🌍️ </p>',
+        content: '<p>Use @ to mention</p>',
         onTransaction: () => {
             // force re-render so `editor.isActive` works as expected
             editor = editor;
