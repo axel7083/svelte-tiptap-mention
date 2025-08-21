@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMount, onDestroy } from 'svelte';
-import { Editor } from '@tiptap/core';
+import {Editor, type NodeType, type TextType} from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import Mention from '@tiptap/extension-mention'
 import MentionList from "./MentionList.svelte";
@@ -17,6 +17,19 @@ let editor: Editor;
 // HTML element
 let element: HTMLDivElement;
 let mentionList: MentionList;
+
+let mentions: Array<string> = $state([]);
+
+function collect(node: NodeType): Array<string> {
+    if(node.type === 'mention') {
+        return [node.attrs.id];
+    } else {
+        return (node.content)?.reduce((accumulator: Array<string>, child: NodeType) => {
+            if(child.type === 'text') return accumulator;
+            return accumulator.concat(collect(child));
+        }, [] as Array<string>) ?? [];
+    }
+}
 
 onMount(() => {
     editor = new Editor({
@@ -39,6 +52,10 @@ onMount(() => {
         ],
         content: '<p>Use @ to mention</p>',
         onTransaction: () => {
+            // collect mentions
+            const documents = editor.getJSON();
+            mentions = collect(documents);
+
             // force re-render so `editor.isActive` works as expected
             editor = editor;
         },
@@ -75,4 +92,10 @@ onDestroy(() => {
 
 <MentionList bind:this={mentionList} />
 <div bind:this={element} />
+
+<ul>
+    {#each mentions as mention}
+        <li>{mention}</li>
+    {/each}
+</ul>
 
