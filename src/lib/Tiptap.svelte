@@ -2,13 +2,20 @@
 import { onMount, onDestroy } from 'svelte';
 import { Editor } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
-import suggestion from './suggestion'
 import Mention from '@tiptap/extension-mention'
 import MentionList from "./MentionList.svelte";
 
-let element: HTMLDivElement;
+interface Props {
+    items: Array<string>;
+}
+
+let { items }: Props = $props();
+
+// Editor instance
 let editor: Editor;
 
+// HTML element
+let element: HTMLDivElement;
 let mentionList: MentionList;
 
 onMount(() => {
@@ -20,7 +27,14 @@ onMount(() => {
                 HTMLAttributes: {
                     class: 'mention',
                 },
-                suggestion: suggestion(mentionList),
+                suggestion: {
+                    items: ({ query }) => {
+                        return items
+                            .filter((item) => item.toLowerCase().startsWith(query.toLowerCase()))
+                            .slice(0, 5);
+                    },
+                    render: () => mentionList
+                },
             }),
         ],
         content: '<p>Use @ to mention</p>',
@@ -60,6 +74,5 @@ onDestroy(() => {
 {/if}
 
 <MentionList bind:this={mentionList} />
-
 <div bind:this={element} />
 
