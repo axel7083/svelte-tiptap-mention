@@ -72,7 +72,10 @@ export function updatePosition(editor: Editor): void {
     }
 </style>
 
-<div bind:this={element} hidden={hidden} class="dropdown-menu" style="display: flex; flex-direction: column;">
+<div bind:this={element}
+     hidden={hidden}
+     class="dropdown-menu"
+     style="display: flex; flex-direction: column; z-index: 1000;">
     {#if items.length}
         {#each items as item, index}
             <button hidden={hidden}

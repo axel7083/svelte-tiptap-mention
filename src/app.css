@@ -89,4 +89,8 @@ button:focus-visible {
     }
 }
 
+.tiptap {
+    border: 1px solid #e1e5e9;
+}
+
 
