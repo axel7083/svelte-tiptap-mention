@@ -59,7 +59,7 @@ onDestroy(() => {
     </button>
 {/if}
 
-<MentionList bind:this={mentionList} items={["hello", "world"]} />
+<MentionList bind:this={mentionList} />
 
 <div bind:this={element} />
 

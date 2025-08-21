@@ -2,18 +2,19 @@
 import { computePosition, flip, shift } from '@floating-ui/dom'
 import { type Editor, posToDOMRect} from "@tiptap/core";
 
-interface Props {
-    items: Array<any>;
-}
-
-let { items }: Props = $props();
-
 let selectedIndex = $state(0);
 let hidden = $state(true);
 let element: HTMLDivElement;
 
+let items = $state<Array<string>>([]);
+
 type Command = (options: { id: string }) => void;
 let command: Command | undefined = $state(undefined);
+
+export function setItems(newItems: Array<string>): void {
+    items = newItems;
+    selectedIndex = 0;
+}
 
 function selectItem(item: any) {
     command?.({ id: item })

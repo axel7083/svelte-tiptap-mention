@@ -89,6 +89,11 @@ button:focus-visible {
     }
 }
 
+.dropdown-menu {
+    background-color: white;
+    border: 1px solid #e1e5e9;
+}
+
 .tiptap {
     border: 1px solid #e1e5e9;
 }

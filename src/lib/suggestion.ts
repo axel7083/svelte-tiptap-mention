@@ -11,12 +11,14 @@ export default function (overlay: MentionList): Omit<SuggestionOptions, 'editor'
                 .slice(0, 5);
         },
         render: () => ({
-            onStart: ({ editor, command }) => {
+            onStart: ({ editor, command, items }) => {
+                overlay.setItems(items);
                 overlay.show(command);
                 overlay.updatePosition(editor)
             },
-            onUpdate: ({ editor }) => {
-                overlay.updatePosition(editor)
+            onUpdate: ({ editor, items }) => {
+                overlay.updatePosition(editor);
+                overlay.setItems(items);
             },
             onExit: () => {
                 console.log('onExit')
