@@ -25,6 +25,10 @@ export function hide(): void {
     hidden = true;
 }
 
+export function setCommand(mCommand: Command): void {
+    command = mCommand;
+}
+
 export function show(mCommand: Command): void {
     command = mCommand;
     hidden = false;

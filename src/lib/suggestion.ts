@@ -16,8 +16,10 @@ export default function (overlay: MentionList): Omit<SuggestionOptions, 'editor'
                 overlay.show(command);
                 overlay.updatePosition(editor)
             },
-            onUpdate: ({ editor, items }) => {
+            onUpdate: ({ editor, items, command }) => {
                 overlay.updatePosition(editor);
+                overlay.setCommand(command);
+
                 overlay.setItems(items);
             },
             onExit: () => {
